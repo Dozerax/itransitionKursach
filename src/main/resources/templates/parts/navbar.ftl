@@ -11,20 +11,23 @@
                 <a class="nav-link" href="/login">Authentication</a>
             </li>
             <#if user??>
-            <li class="nav-item">
-                <a class="nav-link" href="/userList/profile">My profile</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/userList/profile">My profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compositionEditor">Composition</a>
+                </li>
             </#if>
             <#if isAdmin>
-            <li class="nav-item">
-                <a class="nav-link" href="/userList">UserList</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/userList">UserList</a>
+                </li>
             </#if>
         </ul>
         <div class="navbar-text mr-3">${username}</div>
         <form action="/logout" method="post">
             <input type="hidden" name="_csrf" value="${_csrf.token}">
-            <button class="btn btn-primary" type="submit">Выход</button>
+            <button class="btn btn-primary" type="submit">Exit</button>
         </form>
     </div>
 </nav>

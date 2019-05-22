@@ -1,6 +1,6 @@
 <#import "parts/common.ftl" as comm>
 <@comm.page>
-    <h5>User list</h5>
+    <h3>User list</h3>
     <table class="table table-bordered table-sm">
         <tr class="text-center">
             <th>id</th>
@@ -30,14 +30,14 @@
                         ${user.active?c}
                         <input type="hidden" name="id" value="${user.id}">
                         <input type="hidden" name="_csrf" value="${_csrf.token}">
-                        <button class="btn btn-primary" type="submit">Baned/Unbaned</button>
+                        <button class="btn btn-warning" type="submit">Baned/Unbaned</button>
                     </form>
                 </td>
                 <td>
                     <form method="post" action="/userList/delete">
                         <input type="hidden" name="id" value="${user.id}">
                         <input type="hidden" name="_csrf" value="${_csrf.token}">
-                        <button class="btn btn-primary" type="submit">Delete</button>
+                        <button class="btn btn-danger" type="submit">Delete</button>
                     </form>
                 </td>
                 <td>
