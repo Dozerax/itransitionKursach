@@ -42,11 +42,14 @@
                 </td>
                 <td>
                     <div>
-                        <button class="btn btn-primary" type="button" onclick="location.href='/userList/${user.id}'">Edit user
+                        <button class="btn btn-primary" type="button" onclick="location.href='/userList/${user.id}'">
+                            Edit user
                         </button>
                     </div>
                 </td>
             </tr>
+        <#else>
+            User not found
         </#list>
     </table>
 </@comm.page>

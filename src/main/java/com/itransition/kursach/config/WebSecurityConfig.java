@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/registration","/index").permitAll()
+                .antMatchers("/","/registration","/index","/allComposition").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
 
-        http.sessionManagement().maximumSessions(1000).sessionRegistry(sessionRegistry());
+        http.sessionManagement().maximumSessions(10000).sessionRegistry(sessionRegistry());
     }
 
     @Bean

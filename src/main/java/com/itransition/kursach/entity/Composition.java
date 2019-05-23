@@ -11,7 +11,11 @@ public class Composition {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String compositionname;
+    private String compositionDescription;
     private String text;
+
+    private Long userId;
+    private String author;
 
     @ElementCollection(targetClass = Genre.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "composition_genre", joinColumns = @JoinColumn(name = "composition_id"))
@@ -22,10 +26,13 @@ public class Composition {
 
     }
 
-    public Composition(String compositionname, String text, Set<Genre> genres) {
+    public Composition(String compositionname,String compositionDescription, String text, Set<Genre> genres, Long userId,String author) {
         this.compositionname = compositionname;
         this.text = text;
+        this.compositionDescription = compositionDescription;
         this.genres = genres;
+        this.userId = userId;
+        this.author = author;
     }
 
     public Long getId() {
@@ -58,5 +65,29 @@ public class Composition {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCompositionDescription() {
+        return compositionDescription;
+    }
+
+    public void setCompositionDescription(String compositionDescription) {
+        this.compositionDescription = compositionDescription;
     }
 }

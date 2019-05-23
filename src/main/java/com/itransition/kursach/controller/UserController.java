@@ -2,25 +2,26 @@ package com.itransition.kursach.controller;
 
 import com.itransition.kursach.entity.Role;
 import com.itransition.kursach.entity.User;
-import com.itransition.kursach.repository.UserRepository;
 import com.itransition.kursach.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/userList")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
@@ -90,6 +91,4 @@ public class UserController {
         userService.updateProfile(user,password,email);
         return "redirect:/userList/profile";
     }
-
-
 }

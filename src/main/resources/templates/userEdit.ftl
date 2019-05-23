@@ -13,6 +13,8 @@
                     <input type="checkbox" class="form-check-input" name="${role}" ${user.roles?seq_contains(role)?string("checked", "")}>${role}
                 </label>
             </div>
+        <#else>
+            Roles not found
         </#list>
         </div>
         <input type="hidden" value="${user.id}" name="userId">

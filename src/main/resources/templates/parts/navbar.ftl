@@ -10,14 +10,19 @@
             <li class="nav-item">
                 <a class="nav-link" href="/login">Authentication</a>
             </li>
-            <#if user??>
                 <li class="nav-item">
                     <a class="nav-link" href="/userList/profile">My profile</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/compositionEditor">Composition</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Composition
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/allComposition">All composition</a>
+                        <a class="dropdown-item" href="/myComposition">My Composition</a>
+                        <a class="dropdown-item" href="/compositionCreate">Create new Composition</a>
+                    </div>
                 </li>
-            </#if>
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/userList">UserList</a>
