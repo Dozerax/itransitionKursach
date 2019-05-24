@@ -7,11 +7,6 @@
             <div class="card-body">
                 ${composition.text}
             </div>
-            <div class="card-footer">
-                <div class="d-inline float-right">
-                    <button type="button" class="btn btn-primary">Download</button>
-                </div>
-            </div>
         </div>
     </div>
 </@comm.page>

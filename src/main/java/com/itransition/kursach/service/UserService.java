@@ -2,11 +2,10 @@ package com.itransition.kursach.service;
 
 import com.itransition.kursach.entity.Role;
 import com.itransition.kursach.entity.User;
+import com.itransition.kursach.repository.CompositionRepository;
 import com.itransition.kursach.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,9 +18,15 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    private final CompositionRepository compositionRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository, CompositionRepository compositionRepository) {
+        this.userRepository = userRepository;
+        this.compositionRepository = compositionRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -80,14 +85,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUser(User user) {
+        compositionRepository.deleteAll(compositionRepository.findCompositionByUserId(user.getId()));
         userRepository.deleteById(user.getId());
-    }
-
-    @Autowired
-    SessionRegistry sessionRegistry;
-
-    private List<Object> listLoginUser(){
-        List<Object> allPrincipal = sessionRegistry.getAllPrincipals();
-        return allPrincipal;
     }
 }

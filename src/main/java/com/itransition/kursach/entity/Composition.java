@@ -12,6 +12,7 @@ public class Composition {
     private Long id;
     private String compositionname;
     private String compositionDescription;
+    @Column(columnDefinition = "LONGTEXT")
     private String text;
 
     private Long userId;

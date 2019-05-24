@@ -20,14 +20,18 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public WebSecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/registration","/index","/allComposition").permitAll()
+                .antMatchers("/","/registration","/index","/allComposition","/compositionReader/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -36,18 +40,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-
-        http.sessionManagement().maximumSessions(10000).sessionRegistry(sessionRegistry());
-    }
-
-    @Bean
-    public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
-    }
-
-    @Bean
-    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
-        return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
     }
 
     @Override

@@ -3,9 +3,12 @@ package com.itransition.kursach.controller;
 import com.itransition.kursach.entity.Composition;
 import com.itransition.kursach.entity.Genre;
 import com.itransition.kursach.entity.User;
-import com.itransition.kursach.repository.CompositionRepository;
 import com.itransition.kursach.service.CompositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +23,21 @@ import java.util.Set;
 @Controller
 public class CompositionController {
 
-    @Autowired
-    CompositionRepository compositionRepository;
+    private final CompositionService compositionService;
 
     @Autowired
-    CompositionService compositionService;
+    public CompositionController(CompositionService compositionService) {
+        this.compositionService = compositionService;
+    }
 
     @GetMapping("/allComposition")
-    public String allComposition(Model model){
-        model.addAttribute("compositions",compositionService.findAll());
+    public String allComposition(
+            Model model,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+    ){
+        Page<Composition> page = compositionService.findAll(pageable);
+        model.addAttribute("compositions",page);
+        model.addAttribute("url", "/allComposition");
         return "allComposition";
     }
 
@@ -53,10 +62,25 @@ public class CompositionController {
     @GetMapping("/myComposition")
     public String getMyComposition(
             Model model,
-            @AuthenticationPrincipal User user
+            @AuthenticationPrincipal User user,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ){
-        model.addAttribute("myComposition",compositionService.findMyComposition(user));
+        Page<Composition> page = compositionService.findMyComposition(user,pageable);
+        model.addAttribute("compositions",page);
+        model.addAttribute("url", "/myComposition");
         return "myComposition";
+    }
+
+    @GetMapping("/userComposition/{user}")
+    public String getUserComposition(
+            Model model,
+            @PathVariable User user,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+    ){
+        Page<Composition> page = compositionService.findUserComposition(user,pageable);
+        model.addAttribute("compositions",page);
+        model.addAttribute("url", "/userComposition/{user}/");
+        return "userComposition";
     }
 
     @PostMapping("/myComposition/delete")

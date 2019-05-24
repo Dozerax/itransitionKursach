@@ -8,8 +8,7 @@
             <th>Email</th>
             <th>Access</th>
             <th>Activated</th>
-            <th>Delete user</th>
-            <th>Edit</th>
+            <th>Tools</th>
         </tr>
         <#list users as user>
             <tr class="text-center">
@@ -26,25 +25,30 @@
                     <i><#list user.roles as role>${role}<#sep>, </#list>
                 </td>
                 <td>
-                    <form method="post" action="/userList/baned">
                         ${user.active?c}
-                        <input type="hidden" name="id" value="${user.id}">
-                        <input type="hidden" name="_csrf" value="${_csrf.token}">
-                        <button class="btn btn-warning" type="submit">Baned/Unbaned</button>
-                    </form>
                 </td>
                 <td>
-                    <form method="post" action="/userList/delete">
-                        <input type="hidden" name="id" value="${user.id}">
-                        <input type="hidden" name="_csrf" value="${_csrf.token}">
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </form>
-                </td>
-                <td>
-                    <div>
-                        <button class="btn btn-primary" type="button" onclick="location.href='/userList/${user.id}'">
-                            Edit user
+                    <div class="d-inline dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tools
                         </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <form method="post" action="/userList/baned">
+                                <input type="hidden" name="id" value="${user.id}">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                <button class="dropdown-item" type="submit">Baned/Unbaned user</button>
+                            </form>
+                            <form method="post" action="/userList/delete">
+                                <input type="hidden" name="id" value="${user.id}">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                <button class="dropdown-item" type="submit">Delete user</button>
+                            </form>
+                            <button class="dropdown-item" type="button" onclick="location.href='/userList/${user.id}'">
+                                Edit user
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="location.href='/userComposition/${user.id}'">
+                                Get user compositions</button>
+                        </div>
                     </div>
                 </td>
             </tr>

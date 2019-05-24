@@ -1,7 +1,8 @@
 <#import "parts/common.ftl" as comm>
+<#import "parts/pager.ftl" as page>
 <@comm.page>
     <div>
-        <#list compositions as composition>
+        <#list compositions.content as composition>
             <div class="card my-3 border-dark">
                 <div class="card-header text-center">
                     <b>${composition.compositionname?ifExists}</b>
@@ -27,4 +28,5 @@
             Composition not found
         </#list>
     </div>
+    <@page.pager url page />
 </@comm.page>
