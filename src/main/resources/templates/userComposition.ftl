@@ -13,7 +13,7 @@
                 <div class="card-footer">
                     <div class="d-inline float-left">
                         <div>
-                            Author : ${composition.author}
+                            Author : ${composition.author.username}
                         </div>
                         <div>
                             Genres : <#list composition.genres as genre>${genre}<#sep>, </#list>

@@ -2,6 +2,7 @@
 
 <@comm.page>
     <h3>User name : ${username}</h3>
+    <button class="btn btn-primary" onclick="location.href='/myComposition'">My composition</button>
     ${message?ifExists}
     <form method="post">
         <div class="form-group row">

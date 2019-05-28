@@ -12,11 +12,11 @@ public class Composition {
     private Long id;
     private String compositionname;
     private String compositionDescription;
-    @Column(columnDefinition = "LONGTEXT")
-    private String text;
 
-    private Long userId;
-    private String author;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
 
     @ElementCollection(targetClass = Genre.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "composition_genre", joinColumns = @JoinColumn(name = "composition_id"))
@@ -27,12 +27,14 @@ public class Composition {
 
     }
 
-    public Composition(String compositionname,String compositionDescription, String text, Set<Genre> genres, Long userId,String author) {
+    public Composition(User author) {
+        this.author = author;
+    }
+
+    public Composition(String compositionname, String compositionDescription, Set<Genre> genres, User author) {
         this.compositionname = compositionname;
-        this.text = text;
         this.compositionDescription = compositionDescription;
         this.genres = genres;
-        this.userId = userId;
         this.author = author;
     }
 
@@ -52,14 +54,6 @@ public class Composition {
         this.compositionname = compositionname;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public Set<Genre> getGenres() {
         return genres;
     }
@@ -68,19 +62,11 @@ public class Composition {
         this.genres = genres;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

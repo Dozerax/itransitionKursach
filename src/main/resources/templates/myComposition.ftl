@@ -16,9 +16,7 @@
             <div class="card-body">
                 ${composition.compositionDescription}
             </div>
-
             <div class="card-footer">
-
                 <div class="d-inline float-left mt-1">
                     Genres : <#list composition.genres as genre>${genre}<#sep>, </#list>
                 </div>

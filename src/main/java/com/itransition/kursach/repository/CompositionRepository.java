@@ -1,6 +1,7 @@
 package com.itransition.kursach.repository;
 
 import com.itransition.kursach.entity.Composition;
+import com.itransition.kursach.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,8 +14,7 @@ public interface CompositionRepository extends JpaRepository <Composition,Long> 
 
     Page<Composition> findAll(Pageable pageable);
 
-    Page<Composition> findCompositionByUserId(Long userId, Pageable pageable);
+    Page<Composition> findCompositionByAuthor(User author, Pageable pageable);
 
-    List<Composition> findCompositionByUserId(Long userId);
-
+    List<Composition> findCompositionByAuthor(User author);
 }

@@ -5,7 +5,6 @@ import com.itransition.kursach.entity.User;
 import com.itransition.kursach.repository.CompositionRepository;
 import com.itransition.kursach.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -85,7 +84,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUser(User user) {
-        compositionRepository.deleteAll(compositionRepository.findCompositionByUserId(user.getId()));
+        compositionRepository.deleteAll(compositionRepository.findCompositionByAuthor(user));
         userRepository.deleteById(user.getId());
     }
 }

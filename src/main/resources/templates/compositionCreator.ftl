@@ -8,7 +8,6 @@
         <div class="input-group">
             <textarea type="text" name="description" class="col-sm-block form-control mb-2" rows="3" placeholder="Enter description"></textarea>
         </div>
-        <textarea id="mytextarea" name="textarea"></textarea>
         <input type="hidden" value="${_csrf.token}" name="_csrf">
     </form>
     <div class="mt-2">
@@ -23,5 +22,5 @@
             Genre not found
         </#list>
     </div>
-    <button form="createComposition" type="submit" class="btn btn-success btn-lg mt-5 btn-block">Save</button>
+    <button form="createComposition" type="submit" class="btn btn-success btn-lg mt-5 btn-block">Create</button>
 </@comm.page>

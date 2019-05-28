@@ -1,5 +1,6 @@
 package com.itransition.kursach.service;
 
+import com.itransition.kursach.entity.Chapter;
 import com.itransition.kursach.entity.Composition;
 import com.itransition.kursach.entity.Genre;
 import com.itransition.kursach.entity.User;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,13 +29,14 @@ public class CompositionService {
         return compositionRepository.findAll(pageable);
     }
 
-    public void createComposition(String name, String compositionDescription, String text, Set<Genre> genres, User user) {
-        Composition composition = new Composition(name, compositionDescription, text, genres, user.getId(), user.getUsername());
+    public Composition createComposition(String name, String compositionDescription, Set<Genre> genres, User user) {
+        Composition composition = new Composition(name,compositionDescription,genres,user);
         compositionRepository.save(composition);
+        return composition;
     }
 
     public Page<Composition> findMyComposition(User user,Pageable pageable) {
-        return compositionRepository.findCompositionByUserId(user.getId(),pageable);
+        return compositionRepository.findCompositionByAuthor(user,pageable);
     }
 
     public void deleteComposition(Long compositionId) {
@@ -56,12 +57,11 @@ public class CompositionService {
 
         composition.setCompositionname(name);
         composition.setCompositionDescription(description);
-        composition.setText(text);
 
         compositionRepository.save(composition);
     }
 
     public Page<Composition> findUserComposition(User user,Pageable pageable) {
-        return compositionRepository.findCompositionByUserId(user.getId(),pageable);
+        return compositionRepository.findCompositionByAuthor(user,pageable);
     }
 }

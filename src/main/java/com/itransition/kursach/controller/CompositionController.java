@@ -1,8 +1,10 @@
 package com.itransition.kursach.controller;
 
+
 import com.itransition.kursach.entity.Composition;
 import com.itransition.kursach.entity.Genre;
 import com.itransition.kursach.entity.User;
+import com.itransition.kursach.service.ChapterService;
 import com.itransition.kursach.service.CompositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,9 +27,13 @@ public class CompositionController {
 
     private final CompositionService compositionService;
 
+    final
+    ChapterService chapterService;
+
     @Autowired
-    public CompositionController(CompositionService compositionService) {
+    public CompositionController(CompositionService compositionService, ChapterService chapterService) {
         this.compositionService = compositionService;
+        this.chapterService = chapterService;
     }
 
     @GetMapping("/allComposition")
@@ -44,19 +50,18 @@ public class CompositionController {
     @GetMapping("/compositionCreate")
     public String compositionEditorView(Model model){
         model.addAttribute("genres",Genre.values());
-        return "compositionCreate";
+        return "compositionCreator";
     }
 
     @PostMapping("/compositionCreate")
     public String addComposition(
-            @RequestParam("textarea") String text,
             @RequestParam("description") String description,
             @RequestParam("name") String name,
             @RequestParam("checked") Set<Genre> genres,
             @AuthenticationPrincipal User user
     ){
-        compositionService.createComposition(name,description,text,genres,user);
-        return "redirect:/";
+        Composition composition = compositionService.createComposition(name,description,genres,user);
+        return "redirect:/chapterCreator/"+composition.getId().toString();
     }
 
     @GetMapping("/myComposition")
@@ -96,8 +101,8 @@ public class CompositionController {
             @PathVariable Composition composition,
             Model model
     ){
+        model.addAttribute("chapters",chapterService.findChapterByComposition(composition));
         model.addAttribute("composition",composition);
-        model.addAttribute("genres",Genre.values());
         return "compositionEditor";
     }
 
@@ -106,8 +111,8 @@ public class CompositionController {
             @PathVariable Composition composition,
             Model model
     ){
+        model.addAttribute("chapters",chapterService.findChapterByComposition(composition));
         model.addAttribute("composition",composition);
-        model.addAttribute("genres",Genre.values());
         return "compositionReader";
     }
 
